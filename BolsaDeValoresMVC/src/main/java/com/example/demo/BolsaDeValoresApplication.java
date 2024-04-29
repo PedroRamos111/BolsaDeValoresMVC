@@ -8,6 +8,7 @@ public class BolsaDeValoresApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BolsaDeValoresApplication.class, args);
+		System.out.println("aaaa");
 	}
 
 }

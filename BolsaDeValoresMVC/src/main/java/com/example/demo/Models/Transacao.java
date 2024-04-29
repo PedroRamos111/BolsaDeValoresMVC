@@ -7,17 +7,22 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.stereotype.Service;
-
 @Entity
 public class Transacao {
 
-    private String comprador;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String criadorPedido;
     private String atividade;
     private String bolsa;
     private int qtd;
     private double valor;
     private LocalDate data;
+
+    public Long getId() {
+        return this.id;
+    }
 
     public LocalDate getData() {
         return data;
@@ -27,12 +32,12 @@ public class Transacao {
         this.data = data;
     }
 
-    public String getComprador() {
-        return comprador;
+    public String getCriadorPedido() {
+        return criadorPedido;
     }
 
-    public void setComprador(String comprador) {
-        this.comprador = comprador;
+    public void setCriadorPedido(String criadorPedido) {
+        this.criadorPedido = criadorPedido;
     }
 
     public String getAtividade() {

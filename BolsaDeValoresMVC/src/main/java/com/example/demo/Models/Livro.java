@@ -10,11 +10,18 @@ import org.springframework.stereotype.Service;
 @Entity
 public class Livro {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String comprador;
     private String atividade;
     private String bolsa;
     private int qtd;
     private double valor;
+
+    public Long getId() {
+        return this.id;
+    }
 
     public String getComprador() {
         return comprador;
