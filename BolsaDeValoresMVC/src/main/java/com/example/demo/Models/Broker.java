@@ -32,5 +32,4 @@ public class Broker {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-
 }
