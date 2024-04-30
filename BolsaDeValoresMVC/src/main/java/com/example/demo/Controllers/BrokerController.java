@@ -47,4 +47,16 @@ public class BrokerController {
         brokerService.saveBroker(broker);
         return "redirect:/login";
     }
+
+    @PostMapping("/compra")
+    public void compra(@RequestParam String corretora, @RequestParam String ativo,
+                       @RequestParam int quant, @RequestParam double val) {
+        brokerService.compra(corretora, ativo, quant, val);
+    }
+
+    @PostMapping("/venda")
+    public void venda(@RequestParam String corretora, @RequestParam String ativo,
+                      @RequestParam int quant, @RequestParam double val) {
+        brokerService.venda(corretora, ativo, quant, val);
+    }
 }
