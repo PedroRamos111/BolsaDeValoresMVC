@@ -1,6 +1,6 @@
 package com.example.demo.Services;
 
-
+import javax.servlet.http.HttpSession;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.*;
@@ -23,31 +23,33 @@ public class BrokerService {
         return brokerRepository.save(broker);
     }
 
-    public boolean authenticate(String nome, String senha) {
+    public boolean existsByUsername(String username) {
+        Broker broker = brokerRepository.findByName(username);
+        return broker != null;
+    }
+
+    public boolean authenticate(String nome, String senha, HttpSession session) {
         Broker broker = brokerRepository.findByName(nome);
-        System.out.println(nome);
-        System.out.println(senha);
-        System.out.println(broker.getName());
-        System.out.println(broker.getSenha());
-
-
         if (broker != null && broker.getSenha().equals(senha)) {
-            return true; 
+            session.setAttribute("username", nome);
+            return true;
         } else {
-            return false; 
+            return false;
         }
     }
 
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void compra(String corretora, String ativo, int quant, double val) {
+    public void compra(String ativo, int quant, double val, HttpSession session) {
+        String corretora = (String) session.getAttribute("username");
         String topic = "compra." + ativo;
         String message = quant + ";" + val + ";" + corretora;
         enviaPedido(topic, message);
     }
 
-    public void venda(String corretora, String ativo, int quant, double val) {
+    public void venda(String ativo, int quant, double val, HttpSession session) {
+        String corretora = (String) session.getAttribute("username");
         String topic = "venda." + ativo;
         String message = quant + ";" + val + ";" + corretora;
         enviaPedido(topic, message);
@@ -58,7 +60,7 @@ public class BrokerService {
         System.out.println(" [x] Sent '" + topic + "':'" + message + "'");
     }
 
-    @RabbitListener(queues = "Bolsa")
+    @RabbitListener(queues = "Broker")
     public void recebeMsg(String message) {
         String[] dadosM = message.split(";");
         String tipo = dadosM[0];
