@@ -7,8 +7,26 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class BolsaDeValoresApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BolsaDeValoresApplication.class, args);
-		System.out.println("aaaa");
+
+		Thread threadSpring = new Thread(new Runnable() {
+			public void run() {
+
+				SpringApplication.run(BolsaDeValoresApplication.class, args);
+				System.out.println("aaaa");
+			}
+		});
+
+		Thread threadBolsa = new Thread(new Runnable() {
+			public void run() {
+				try {
+					Bolsa.inicio();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		threadSpring.start();
+		threadBolsa.start();
 	}
 
 }

@@ -17,7 +17,7 @@ public class RabbitMQConfig {
 
     @Bean
     TopicExchange exchange() {
-        return new TopicExchange("Bolsa");
+        return new TopicExchange("topic_logs");
     }
 
     @Bean

@@ -56,7 +56,7 @@ public class BrokerService {
     }
 
     private void enviaPedido(String topic, String message) {
-        rabbitTemplate.convertAndSend(topic, message);
+        rabbitTemplate.convertAndSend("topic_logs", topic, message);
         System.out.println(" [x] Sent '" + topic + "':'" + message + "'");
     }
 
