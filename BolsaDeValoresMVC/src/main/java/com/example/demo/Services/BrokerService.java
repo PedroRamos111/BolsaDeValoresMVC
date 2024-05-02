@@ -60,7 +60,7 @@ public class BrokerService {
         System.out.println(" [x] Sent '" + topic + "':'" + message + "'");
     }
 
-    @RabbitListener(queues = "Broker")
+    @RabbitListener(queues = "BOLSA")
     public void recebeMsg(String message) {
         String[] dadosM = message.split(";");
         String tipo = dadosM[0];
