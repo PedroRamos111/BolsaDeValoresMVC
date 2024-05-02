@@ -14,6 +14,7 @@ import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.*;
 import org.springframework.amqp.rabbit.listener.SimpleMessageListenerContainer;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,49 +42,13 @@ public class BolsaService {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    @Autowired
-    private AmqpAdmin amqpAdmin;
-
     @PostConstruct
-    public void init() {
-        String queueName = UUID.randomUUID().toString();
-        Queue queue = new Queue(queueName, false);
-        amqpAdmin.declareQueue(queue);
-
-        TopicExchange exchange = new TopicExchange("topic_logs", false, false);
-        amqpAdmin.declareExchange(exchange);
-
-        Binding compraBinding = BindingBuilder.bind(queue).to(exchange).with("compra.#");
-        Binding vendaBinding = BindingBuilder.bind(queue).to(exchange).with("venda.#");
-
-        amqpAdmin.declareBinding(compraBinding);
-        amqpAdmin.declareBinding(vendaBinding);
-
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(rabbitTemplate.getConnectionFactory());
-        container.setQueueNames(queueName);
-        container.setMessageListener(message -> recebePedido(message));
-        container.start();
+    public void start(){
+        System.out.println("start bolsa");
     }
 
-    public void recebePedido(Message message) {
-        String routingKey = message.getMessageProperties().getReceivedRoutingKey();
-        String messageBody = new String(message.getBody(), StandardCharsets.UTF_8);
-        System.out.println(" [x] Received '" + routingKey + "':'" + messageBody + "'");
-        try {
-            enviaMsg(routingKey, messageBody, "BOLSA");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Thread threadLivro = new Thread(() -> {
-            try {
-                checkMatch(messageBody, routingKey);
-                registraLivro();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        threadLivro.start();
+    public void recebePedido(String message) {
+        System.out.println("Recebido: " + message);
     }
 
     public static synchronized void checkMatch(String message, String key) throws IOException {
@@ -273,4 +238,5 @@ public class BolsaService {
          */
 
     }
+
 }
