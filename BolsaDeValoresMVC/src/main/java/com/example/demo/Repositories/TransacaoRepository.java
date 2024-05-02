@@ -6,4 +6,3 @@ import com.example.demo.Models.Livro;
 
 public interface TransacaoRepository extends JpaRepository<Livro, Long> {
 }
-

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <title>Registro</title>
 </head>
+
 <body>
     <h2>Registro</h2>
     <form th:object="${broker}" th:action="@{/register}" method="post">
@@ -13,4 +15,5 @@
         <input type="submit" value="Registrar">
     </form>
 </body>
+
 </html>

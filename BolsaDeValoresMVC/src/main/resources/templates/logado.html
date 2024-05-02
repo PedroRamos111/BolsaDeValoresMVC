@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,6 +8,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Homepage</title>
 </head>
+
 <body>
     <h1>Compra e Venda de Ações</h1>
     <form id="formDeTransacao">
@@ -30,19 +32,20 @@
 </body>
 
 <script>
-    $(document).ready(function(){
-        $("#formDeTransacao").on('submit', function(e){
+    $(document).ready(function () {
+        $("#formDeTransacao").on('submit', function (e) {
             e.preventDefault();
             var tipo = $("#transacao").val();
             var acao = $("#acao").val();
             var quantidade = $("#quantidade").val();
             var preco = $("#preco").val();
             var endpoint = tipo === "compra" ? "/compra" : "/venda";
-            $.post(endpoint, {ativo: acao, quant: quantidade, val: preco }, function(data){
+            $.post(endpoint, { ativo: acao, quant: quantidade, val: preco }, function (data) {
                 alert("Transação enviada com sucesso!");
             });
         });
     });
-    </script>
+</script>
 </body>
+
 </html>
