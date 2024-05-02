@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 </head>
+
 <body>
     <h2>Login</h2>
-    <form action="/login" method="post" th:object="${broker}"> 
+    <form action="/login" method="post" th:object="${broker}">
         <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" th:field="*{name}"><br><br> 
+        <input type="text" id="name" name="name" th:field="*{name}"><br><br>
         <label for="password">Senha:</label>
-        <input type="password" id="password" name="senha" th:field="*{senha}"><br><br> 
+        <input type="password" id="password" name="senha" th:field="*{senha}"><br><br>
         <button type="submit">Login</button>
     </form>
 </body>
+
 </html>

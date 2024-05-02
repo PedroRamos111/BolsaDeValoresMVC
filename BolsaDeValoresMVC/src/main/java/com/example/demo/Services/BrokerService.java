@@ -56,11 +56,12 @@ public class BrokerService {
     }
 
     private void enviaPedido(String topic, String message) {
+        message += ":" + topic;
         rabbitTemplate.convertAndSend("topic_logs", topic, message);
-        System.out.println(" [x] Sent '" + topic + "':'" + message + "'");
+        System.out.println(" [x] Sent '" + message + "'");
     }
 
-    @RabbitListener(queues = "BOLSA")
+    @RabbitListener(queues = "BOLSA") // isso esta errado de proposito pq tava quebrando c os split q n existia
     public void recebeMsg(String message) {
         String[] dadosM = message.split(";");
         String tipo = dadosM[0];
