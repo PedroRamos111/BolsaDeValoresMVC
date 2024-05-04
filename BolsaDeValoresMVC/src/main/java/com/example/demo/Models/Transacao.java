@@ -1,7 +1,5 @@
 package com.example.demo.Models;
 
-import java.time.LocalDate;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,39 +11,39 @@ public class Transacao {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String criadorPedido;
-    private String atividade;
+    private String comprador;
+    private String vendedor;
     private String bolsa;
     private int qtd;
     private double valor;
-    private LocalDate data;
+    private String data;
 
     public Long getId() {
         return this.id;
     }
 
-    public LocalDate getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(LocalDate data) {
+    public void setData(String data) {
         this.data = data;
     }
 
-    public String getCriadorPedido() {
-        return criadorPedido;
+    public String getComprador() {
+        return comprador;
     }
 
-    public void setCriadorPedido(String criadorPedido) {
-        this.criadorPedido = criadorPedido;
+    public void setComprador(String comprador) {
+        this.comprador = comprador;
     }
 
-    public String getAtividade() {
-        return atividade;
+    public String getVendedor() {
+        return vendedor;
     }
 
-    public void setAtividade(String atividade) {
-        this.atividade = atividade;
+    public void setVendedor(String vendedor) {
+        this.vendedor = vendedor;
     }
 
     public String getBolsa() {
