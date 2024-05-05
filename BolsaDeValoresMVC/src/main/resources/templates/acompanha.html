@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Acompanhar ações</title>
+</head>
+
+<body>
+    <h2>Acompanhamento</h2>
+    <form id="formAcompanha" th:action="@{/acompanha}" method="post">
+        <label for="acompanha">Digite qual ação Você quer acompanhar (Uma ação por vez):</label><br><br>
+        <input type="text" id="acompanhaInput" name="acompanha"><br>
+        <input type="submit" value="Enviar">
+    </form>
+    <button id="logado" style="margin-top: 20px;">Página principal</button>
+
+    <script>
+        $(document).ready(function () {
+            $("#formAcompanha").submit(function (e) {
+                e.preventDefault(); // Impede o envio padrão do formulário
+                $.ajax({
+                    type: 'POST',
+                    url: '/acompanha',
+                    data: $('#formAcompanha').serialize(),
+                    success: function (response) {
+                        alert("Acompanha adicionado com sucesso!");
+                        // Aqui você pode adicionar mais lógica se necessário
+                    },
+                    error: function (xhr, status, error) {
+                        alert("Erro ao adicionar acompanhamento.");
+                        // Aqui você pode adicionar mais lógica se necessário
+                    }
+                });
+            });
+
+            $("#logado").click(function () {
+                window.location.href = "/logado";
+            });
+        });
+    </script>
+</body>
+
+</html>

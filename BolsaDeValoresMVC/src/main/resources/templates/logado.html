@@ -29,6 +29,7 @@
         <br>
         <input type="submit" value="Enviar">
     </form>
+    <button id="acompanhar" style="margin-top: 20px;">Quero acompanhar uma ação</button>
 </body>
 
 <script>
@@ -43,6 +44,10 @@
             $.post(endpoint, { ativo: acao, quant: quantidade, val: preco }, function (data) {
                 alert("Transação enviada com sucesso!");
             });
+        });
+
+        $("#acompanhar").click(function (e) {
+            window.location.href = "/acompanha";
         });
     });
 </script>

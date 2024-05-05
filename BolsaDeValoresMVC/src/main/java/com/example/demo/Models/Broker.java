@@ -12,6 +12,7 @@ public class Broker {
     private Long id;
     private String name;
     private String senha;
+    private String acompanha;
 
     public Long getId() {
         return id;
@@ -31,5 +32,13 @@ public class Broker {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public String getAcompanha() {
+        return acompanha;
+    }
+
+    public void setAcompanha(String acompanha) {
+        this.acompanha = acompanha;
     }
 }
