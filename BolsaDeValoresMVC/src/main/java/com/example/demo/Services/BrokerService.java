@@ -1,17 +1,12 @@
 package com.example.demo.Services;
 
 import javax.servlet.http.HttpSession;
-import com.example.demo.Services.RabbitMQTopicInitializer;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.core.MessageListener;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-
 import com.example.demo.Models.Broker;
 import com.example.demo.Repositories.BrokerRepository;
 
@@ -120,7 +115,6 @@ public class BrokerService implements MessageListener  {
             acompanhadosS = acoesAcompanhadas.split(";");
         }
         rabbitMQTopicInitializer.initializeTopics(acompanhadosS);
-
     }
 
     @Override
@@ -133,5 +127,6 @@ public class BrokerService implements MessageListener  {
         String preco = dadosM[3];
         String corretora = dadosM[4];
         this.msgFormatada = formatMsg(tipo, acao, quantidade, preco, corretora);
+        System.out.println("aaaaaaaasdasdasdasdasdasdasdadasdasdasdasdasd");
     }
 }

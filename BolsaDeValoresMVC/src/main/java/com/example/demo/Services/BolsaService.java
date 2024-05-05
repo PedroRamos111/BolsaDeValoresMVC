@@ -46,6 +46,7 @@ public class BolsaService {
     @PostConstruct
     public void start() {
         System.out.println("start bolsa");
+        getDadosLivro();
     }
 
     public void recebePedido(String message) {
@@ -172,30 +173,21 @@ public class BolsaService {
         System.out.println(" [x] Sent '" + topic + "':'" + message + "'");
     }
 
-    public static void getDadosLivro() {
-        /*
-         * try {
-         * BufferedReader reader = new BufferedReader(new FileReader(arqLivro));
-         * String linha;
-         * 
-         * while ((linha = reader.readLine()) != null) {
-         * StringTokenizer str = new StringTokenizer(linha, "\n");
-         * String dadosL = str.nextToken();
-         * String[] dados = dadosL.split(";");
-         * String key = dados[0];
-         * String message = dados[1] + ";" + dados[2] + ";" + dados[3];
-         * checkMatch(message, key);
-         * }
-         * reader.close();
-         * } catch (IOException e) {
-         * e.printStackTrace();
-         * }
-         */
+    public void getDadosLivro() {
+        List<Livro> livro = livroRepository.findAll();
+        for (int i = 0; i < livro.size(); i++) {
+            String tipo = livro.get(i).getAtividade();
+            String acao = livro.get(i).getBolsa();
+            String corretora = livro.get(i).getComprador();
+            String quantidade = String.valueOf(livro.get(i).getQtd());
+            String preco = String.valueOf(livro.get(i).getValor());
+            String msg = tipo + "." + acao + ";" + quantidade + ";" + preco + ";" + corretora;
+            dadosList.add(msg);
+        }
     }
 
     public void registraLivro() {
         livroRepository.deleteAll();
-
         for (int i = 0; i < dadosList.size(); i++) {
             String[] aux = dadosList.get(i).split(";", 2);
             String key = aux[0];
@@ -208,6 +200,10 @@ public class BolsaService {
             String preco = dadosM[1];
             String corretora = dadosM[2];
             saveLivro(tipo, acao, corretora, Integer.parseInt(quantidade), Double.parseDouble(preco));
+
+            String topico = acao;
+            String msg = tipo + ";" + acao + ";" + quantidade + ";" + preco + ";" + corretora;
+            enviaMsg(topico, msg, "Broker");
         }
 
         for (int i = 0; i < dadosList.size(); i++) {
@@ -228,12 +224,11 @@ public class BolsaService {
         transacao.setValor(val);
         transacaoRepository.save(transacao);
 
-        /*String topico = "transacao" + "." + ativo;
+        String topico = "transacao" + ";" + ativo;
         String msg = LocalDateTime.now().format(formatador) + ";" + quant + ";" + val
                 + ";"
                 + comprador + ";" + vendedor;
-        enviaMsg(topico, msg, "BOLSA");
-*/
+        enviaMsg(topico, msg, "Broker");
     }
 
     public Livro saveLivro(String tipo, String acao, String corretora, int quant, double valor) {

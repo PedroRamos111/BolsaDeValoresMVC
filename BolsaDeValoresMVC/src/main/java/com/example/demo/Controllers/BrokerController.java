@@ -1,7 +1,5 @@
 package com.example.demo.Controllers;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
