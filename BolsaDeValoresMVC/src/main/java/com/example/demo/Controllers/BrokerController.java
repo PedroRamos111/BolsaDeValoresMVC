@@ -18,6 +18,13 @@ public class BrokerController {
     @Autowired
     private BrokerService brokerService;
 
+    @GetMapping("/mensagem")
+    public String exibirMensagem(Model model) {
+        String mensagemFormatada = brokerService.getFormattedMessage();
+        model.addAttribute("mensagem", mensagemFormatada);
+        return "exibirMensagem"; // nome do arquivo HTML
+    }
+
     @GetMapping("/login")
     public String login(Model model) {
         model.addAttribute("broker", new Broker());
@@ -74,7 +81,7 @@ public class BrokerController {
         return ResponseEntity.ok("Transação de venda enviada com sucesso!");
     }
 
- @GetMapping("/acompanha")
+    @GetMapping("/acompanha")
     public String acompanha(Model model) {
         model.addAttribute("broker", new Broker());
         return "acompanha";
@@ -84,5 +91,5 @@ public class BrokerController {
     public ResponseEntity<String> acompanharAcao(HttpSession session, @RequestParam String acompanha) {
         return ResponseEntity.ok(brokerService.acompanha(session, acompanha));
     }
-    
+
 }
