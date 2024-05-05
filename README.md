@@ -1,10 +1,12 @@
 # BolsaDeValoresMVC
 
-Dupla:
+Grupo:
 
 Giovanni Duarte;
-Pedro Ramos Vidigal.
-Instruções para a compilação:
+<br>Pedro Ramos Vidigal;
+<br>Carlos Emanuel;
+<br>Gustavo Andrade
+<br>Instruções para a compilação:
 
 Baixar o mySQL workbench e criar uma conexão com o nome "bolsadevaloresmvc" e sem senha 
 <br>Executar o arquivo BolsaDeValoresApplication.java
