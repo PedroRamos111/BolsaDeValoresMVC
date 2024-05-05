@@ -7,8 +7,8 @@ Pedro Ramos Vidigal.
 Instruções para a compilação:
 
 Baixar o mySQL workbench e criar uma conexão com o nome "bolsadevaloresmvc" e sem senha 
-Executar o arquivo BolsaDeValoresApplication.java
-Entrar no link: http://localhost:8080/registro
+<br>Executar o arquivo BolsaDeValoresApplication.java
+<br>Entrar no link: http://localhost:8080/registro
 Explicação do código:
 
 O código é feito em spring boot, contendo controllers, entidades, services e configurations.
