@@ -1,5 +1,7 @@
 package com.example.demo.Controllers;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,4 +73,16 @@ public class BrokerController {
         brokerService.venda(ativo, quant, val, session);
         return ResponseEntity.ok("Transação de venda enviada com sucesso!");
     }
+
+ @GetMapping("/acompanha")
+    public String acompanha(Model model) {
+        model.addAttribute("broker", new Broker());
+        return "acompanha";
+    }
+
+    @PostMapping("/acompanha")
+    public ResponseEntity<String> acompanharAcao(HttpSession session, @RequestParam String acompanha) {
+        return ResponseEntity.ok(brokerService.acompanha(session, acompanha));
+    }
+    
 }

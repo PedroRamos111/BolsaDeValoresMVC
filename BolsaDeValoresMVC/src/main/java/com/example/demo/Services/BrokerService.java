@@ -5,7 +5,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.amqp.rabbit.core.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.Models.Broker;
 import com.example.demo.Repositories.BrokerRepository;
@@ -76,4 +79,26 @@ public class BrokerService {
         return "Novos pedidos sobre a ação " + acao + ":\nTipo: " + tipo + "\nQuantidade: " + quantidade +
                 "\nPreço: " + preco + "\nBroker responsável: " + corretora;
     }
+
+public String acompanha(HttpSession session, String novaAcao) {
+    String nome = (String) session.getAttribute("username");
+    Broker broker = brokerRepository.findByName(nome);
+    
+    if (broker != null) {
+        String acoesAcompanhadas = broker.getAcompanha();
+        if (acoesAcompanhadas != null && !acoesAcompanhadas.isEmpty()) {
+            acoesAcompanhadas += ";" + novaAcao;
+        } else {
+            acoesAcompanhadas = novaAcao;
+        }
+        
+        broker.setAcompanha(acoesAcompanhadas);
+        saveBroker(broker);
+        
+        return "Acompanha adicionado com sucesso!";
+    } else {
+        return "Você precisa estar logado para acompanhar.";
+    }
+}
+
 }
