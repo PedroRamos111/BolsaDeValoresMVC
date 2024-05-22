@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.Models.Broker;
 import com.example.demo.Services.BrokerService;
 
-@Controller
+@RestController
 public class BrokerController {
 
     @Autowired

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:lab_flutter/components/my_button.dart';
 import 'package:lab_flutter/components/my_textfild.dart';
 import 'package:lab_flutter/models/broker.dart' as broker;
+import 'package:http/http.dart' as http;
 import 'package:lab_flutter/pages/cadastro.dart';
 
 class LoginPage extends StatefulWidget {
@@ -23,15 +24,36 @@ class _LoginPageState extends State<LoginPage> {
   final passwordTextController = TextEditingController();
 
   Future<void> signUserIn() async {
-    broker.Broker usuario = broker.Broker(email: usernameTextController.text);
-    final login = jsonDecode(await usuario.login(passwordTextController.text));
+    final login = jsonDecode(
+        await loginF(passwordTextController.text, usernameTextController.text));
 
     if (login['success'] as bool) {
-      //context.showSnackBar(message: login['message'] as String);
-      //Navigator.of(context).pushAndRemoveUntil(HomePage.route(), (route) => false);
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => const CadastroUsuario()),
+        (route) => false,
+      );
+    } else {}
+  }
+
+  Future<String> loginF(String password, String name) async {
+    final loginRoute = Uri.parse('http://192.168.0.10:8080/login');
+
+    final fetch = await http.post(
+      loginRoute,
+      body: {"name": name, "password": password},
+    );
+
+    //final data = jsonDecode(fetch.body.toString());
+    Object res;
+
+    if (fetch.statusCode == 200) {
+      res = {"success": true};
     } else {
-      //context.showErrorSnackBar(message: login['message'] as String);
+      res = {
+        "success": false,
+      };
     }
+    return jsonEncode(res);
   }
 
   @override
@@ -60,7 +82,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 25),
               MyTextfield(
                   controller: usernameTextController,
-                  hintText: "Email",
+                  hintText: "Nome",
                   obscureText: false),
               const SizedBox(
                 height: 25.0,
@@ -69,18 +91,6 @@ class _LoginPageState extends State<LoginPage> {
                 controller: passwordTextController,
                 hintText: "Senha",
                 obscureText: true,
-              ),
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Esqueceu a senha',
-                      style: TextStyle(color: Colors.white),
-                    )
-                  ],
-                ),
               ),
               const SizedBox(height: 25.0),
               MyButton(
