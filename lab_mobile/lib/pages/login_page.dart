@@ -1,4 +1,5 @@
 // ignore_for_file: unused_field
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:lab_flutter/components/my_button.dart';
@@ -36,7 +37,9 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<String> loginF(String password, String name) async {
-    final loginRoute = Uri.parse('http://192.168.0.10:8080/login');
+
+    await dotenv.load(fileName: ".env");
+    final loginRoute = Uri.parse('${dotenv.env['API_URL']}/login');
 
     final fetch = await http.post(
       loginRoute,
