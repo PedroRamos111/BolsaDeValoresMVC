@@ -29,11 +29,11 @@ class _LoginPageState extends State<LoginPage> {
         await loginF(passwordTextController.text, usernameTextController.text));
 
     if (login['success'] as bool) {
-      context.showSnackBar(message: login['message'] as String);
+      context.showSnackBar(message: 'Login realizado com sucesso');
       Navigator.of(context)
           .pushAndRemoveUntil(CadastroUsuario.route(), (route) => false);
     } else {
-      context.showErrorSnackBar(message: login['message'] as String);
+      context.showErrorSnackBar(message: 'Erro no login');
     }
   }
 

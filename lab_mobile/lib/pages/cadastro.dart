@@ -29,20 +29,19 @@ class _CadastroUsuarioState extends State<CadastroUsuario> {
     await dotenv.load(fileName: ".env");
     final registerRoute = Uri.parse('${dotenv.env['API_URL']}/register');
 
+    print(_senhaController.text);
     final fetch = await http.post(
       registerRoute,
-      body: {"name": _nomeController.text, "password": _senhaController.text},
+      body: {"name": _nomeController.text, "senha": _senhaController.text},
     );
 
-    final data = jsonDecode(fetch.body.toString());
-
-    if (fetch.statusCode == 201) {
-      context.showSnackBar(message: data['message']);
+    if (fetch.statusCode == 200) {
+      context.showSnackBar(message:'Cadastro realizado com sucesso');
       Navigator.of(context)
           .pushAndRemoveUntil(LoginPage.route(), (route) => false);
     } else {
       context.showErrorSnackBar(
-          message: data['message'] + "! " + data['error']);
+          message: 'Erro de cadastro');
     }
   }
 
