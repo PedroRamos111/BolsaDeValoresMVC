@@ -1,12 +1,12 @@
-// ignore_for_file: unused_field
+// ignore_for_file: unused_field, use_build_context_synchronously
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:lab_flutter/components/my_button.dart';
 import 'package:lab_flutter/components/my_textfild.dart';
-import 'package:lab_flutter/models/broker.dart' as broker;
 import 'package:http/http.dart' as http;
 import 'package:lab_flutter/pages/cadastro.dart';
+import 'package:lab_flutter/utils/constants.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,15 +29,15 @@ class _LoginPageState extends State<LoginPage> {
         await loginF(passwordTextController.text, usernameTextController.text));
 
     if (login['success'] as bool) {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => const CadastroUsuario()),
-        (route) => false,
-      );
-    } else {}
+      context.showSnackBar(message: login['message'] as String);
+      Navigator.of(context)
+          .pushAndRemoveUntil(CadastroUsuario.route(), (route) => false);
+    } else {
+      context.showErrorSnackBar(message: login['message'] as String);
+    }
   }
 
   Future<String> loginF(String password, String name) async {
-
     await dotenv.load(fileName: ".env");
     final loginRoute = Uri.parse('${dotenv.env['API_URL']}/login');
 
