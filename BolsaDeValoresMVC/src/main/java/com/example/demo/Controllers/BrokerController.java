@@ -67,27 +67,28 @@ public class BrokerController {
 
     @PostMapping("/compra")
     public ResponseEntity<String> compra(HttpSession session, @RequestParam String ativo,
-            @RequestParam int quant, @RequestParam double val) {
-        brokerService.compra(ativo, quant, val, session);
+            @RequestParam int quant, @RequestParam double val, @RequestParam String username) {
+        brokerService.compra(ativo, quant, val, username);
         return ResponseEntity.ok("Transação de compra enviada com sucesso!");
     }
 
     @PostMapping("/venda")
     public ResponseEntity<String> venda(HttpSession session, @RequestParam String ativo,
-            @RequestParam int quant, @RequestParam double val) {
-        brokerService.venda(ativo, quant, val, session);
+            @RequestParam int quant, @RequestParam double val, @RequestParam String username) {
+        brokerService.venda(ativo, quant, val, username);
         return ResponseEntity.ok("Transação de venda enviada com sucesso!");
     }
 
+    @PostMapping("/acompanha")
+    public ResponseEntity<String> acompanharAcao(HttpSession session, @RequestParam String acompanha, @RequestParam String username) {
+        return ResponseEntity.ok(brokerService.acompanha(username, acompanha));
+    }
+    
     @GetMapping("/acompanha")
     public String acompanha(Model model) {
         model.addAttribute("broker", new Broker());
         return "acompanha";
     }
 
-    @PostMapping("/acompanha")
-    public ResponseEntity<String> acompanharAcao(HttpSession session, @RequestParam String acompanha) {
-        return ResponseEntity.ok(brokerService.acompanha(session, acompanha));
-    }
 
 }

@@ -7,6 +7,8 @@ import 'package:lab_flutter/components/my_textfild.dart';
 import 'package:http/http.dart' as http;
 import 'package:lab_flutter/pages/cadastro.dart';
 import 'package:lab_flutter/utils/constants.dart';
+import 'package:lab_flutter/utils/globals.dart' as globals;
+import 'homepage.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -29,9 +31,10 @@ class _LoginPageState extends State<LoginPage> {
         await loginF(passwordTextController.text, usernameTextController.text));
 
     if (login['success'] as bool) {
+      globals.loggedInUser = usernameTextController.text;
       context.showSnackBar(message: 'Login realizado com sucesso');
       Navigator.of(context)
-          .pushAndRemoveUntil(CadastroUsuario.route(), (route) => false);
+          .pushAndRemoveUntil(HomePage.route(), (route) => false);
     } else {
       context.showErrorSnackBar(message: 'Erro no login');
     }

@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
-
 <body>
     <h2>Login</h2>
-    <form action="/login" method="post" th:object="${broker}">
+    <form id="loginForm">
         <label for="name">Nome:</label>
-        <input type="text" id="name" name="name" th:field="*{name}"><br><br>
+        <input type="text" id="name" name="name"><br><br>
         <label for="password">Senha:</label>
-        <input type="password" id="password" name="senha" th:field="*{senha}"><br><br>
+        <input type="password" id="password" name="senha"><br><br>
         <button type="submit">Login</button>
     </form>
-</body>
 
+    <script>
+        $(document).ready(function () {
+            $("#loginForm").on('submit', function (e) {
+                e.preventDefault();
+                var name = $("#name").val();
+                var senha = $("#password").val();
+                $.post("/login", { name: name, senha: senha }, function (data) {
+                    // Assumindo que o login é bem-sucedido, armazenamos o nome do usuário
+                    localStorage.setItem('username', name);
+                    alert("Login bem-sucedido!");
+                    window.location.href = "/logado"; // Redirecionar para a página principal após o login
+                }).fail(function() {
+                    alert("Falha no login. Verifique suas credenciais.");
+                });
+            });
+        });
+    </script>
+</body>
 </html>
