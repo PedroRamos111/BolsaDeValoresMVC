@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,7 +7,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Homepage</title>
 </head>
-
 <body>
     <h1>Compra e Venda de Ações</h1>
     <form id="formDeTransacao">
@@ -30,27 +28,26 @@
         <input type="submit" value="Enviar">
     </form>
     <button id="acompanhar" style="margin-top: 20px;">Quero acompanhar uma ação</button>
-</body>
 
-<script>
-    $(document).ready(function () {
-        $("#formDeTransacao").on('submit', function (e) {
-            e.preventDefault();
-            var tipo = $("#transacao").val();
-            var acao = $("#acao").val();
-            var quantidade = $("#quantidade").val();
-            var preco = $("#preco").val();
-            var endpoint = tipo === "compra" ? "/compra" : "/venda";
-            $.post(endpoint, { ativo: acao, quant: quantidade, val: preco }, function (data) {
-                alert("Transação enviada com sucesso!");
+    <script>
+        $(document).ready(function () {
+            $("#formDeTransacao").on('submit', function (e) {
+                e.preventDefault();
+                var tipo = $("#transacao").val();
+                var acao = $("#acao").val();
+                var quantidade = $("#quantidade").val();
+                var preco = $("#preco").val();
+                var username = localStorage.getItem('username');
+                var endpoint = tipo === "compra" ? "/compra" : "/venda";
+                $.post(endpoint, { ativo: acao, quant: quantidade, val: preco, username: username }, function (data) {
+                    alert("Transação enviada com sucesso!");
+                });
+            });
+
+            $("#acompanhar").click(function (e) {
+                window.location.href = "/acompanha";
             });
         });
-
-        $("#acompanhar").click(function (e) {
-            window.location.href = "/acompanha";
-        });
-    });
-</script>
+    </script>
 </body>
-
 </html>

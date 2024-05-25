@@ -49,15 +49,13 @@ public class BrokerService implements MessageListener  {
     @Autowired
     private RabbitTemplate rabbitTemplate;
 
-    public void compra(String ativo, int quant, double val, HttpSession session) {
-        String corretora = (String) session.getAttribute("username");
+    public void compra(String ativo, int quant, double val, String corretora) {
         String topic = "compra." + ativo;
         String message = quant + ";" + val + ";" + corretora;
         enviaPedido(topic, message);
     }
 
-    public void venda(String ativo, int quant, double val, HttpSession session) {
-        String corretora = (String) session.getAttribute("username");
+    public void venda(String ativo, int quant, double val, String corretora) {
         String topic = "venda." + ativo;
         String message = quant + ";" + val + ";" + corretora;
         enviaPedido(topic, message);
@@ -68,6 +66,7 @@ public class BrokerService implements MessageListener  {
         rabbitTemplate.convertAndSend("topic_logs", topic, message);
         System.out.println(" [x] Sent '" + message + "'");
     }
+
 
     @RabbitListener(queues = "BOLSA") // isso esta errado de proposito pq tava quebrando c os split q n existia
     public void recebeMsg(String message) {
@@ -85,8 +84,7 @@ public class BrokerService implements MessageListener  {
                 "\nPreço: " + preco + "\nBroker responsável: " + corretora;
     }
 
-    public String acompanha(HttpSession session, String novaAcao) {
-        String nome = (String) session.getAttribute("username");
+    public String acompanha(String nome, String novaAcao) {
         Broker broker = brokerRepository.findByName(nome);
 
         if (broker != null) {

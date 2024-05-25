@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <title>Acompanhar ações</title>
 </head>
-
 <body>
     <h2>Acompanhamento</h2>
-    <form id="formAcompanha" th:action="@{/acompanha}" method="post">
+    <form id="formAcompanha">
         <label for="acompanha">Digite qual ação Você quer acompanhar (Uma ação por vez):</label><br><br>
         <input type="text" id="acompanhaInput" name="acompanha"><br>
         <input type="submit" value="Enviar">
@@ -21,18 +19,12 @@
         $(document).ready(function () {
             $("#formAcompanha").submit(function (e) {
                 e.preventDefault(); // Impede o envio padrão do formulário
-                $.ajax({
-                    type: 'POST',
-                    url: '/acompanha',
-                    data: $('#formAcompanha').serialize(),
-                    success: function (response) {
-                        alert("Acompanha adicionado com sucesso!");
-                        // Aqui você pode adicionar mais lógica se necessário
-                    },
-                    error: function (xhr, status, error) {
-                        alert("Erro ao adicionar acompanhamento.");
-                        // Aqui você pode adicionar mais lógica se necessário
-                    }
+                var username = localStorage.getItem('username');
+                var acompanha = $("#acompanhaInput").val();
+                $.post('/acompanha', { acompanha: acompanha, username: username }, function (response) {
+                    alert("Acompanha adicionado com sucesso!");
+                }).fail(function() {
+                    alert("Erro ao adicionar acompanhamento.");
                 });
             });
 
@@ -42,5 +34,4 @@
         });
     </script>
 </body>
-
 </html>
