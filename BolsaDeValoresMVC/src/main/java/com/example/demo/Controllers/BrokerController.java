@@ -4,9 +4,10 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+
 import com.example.demo.Models.Broker;
 import com.example.demo.Services.BrokerService;
 
@@ -17,20 +18,22 @@ public class BrokerController {
     private BrokerService brokerService;
 
     @GetMapping("/mensagem")
-    public String exibirMensagem(Model model) {
+    public ModelAndView exibirMensagem() {
+        ModelAndView mav = new ModelAndView("exibirMensagem");
         String mensagemFormatada = brokerService.getFormattedMessage();
-        model.addAttribute("mensagem", mensagemFormatada);
-        return "exibirMensagem"; // nome do arquivo HTML
+        mav.addObject("mensagem", mensagemFormatada);
+        return mav;
     }
 
     @GetMapping("/login")
-    public String login(Model model) {
-        model.addAttribute("broker", new Broker());
-        return "login";
+    public ModelAndView login() {
+        ModelAndView mav = new ModelAndView("login");
+        mav.addObject("broker", new Broker());
+        return mav;
     }
 
     @PostMapping("/login")
-    public String authenticate(@ModelAttribute("broker") Broker loginBroker, HttpSession session) {
+    public ModelAndView authenticate(@ModelAttribute("broker") Broker loginBroker, HttpSession session) {
         String username = loginBroker.getName();
         String password = loginBroker.getSenha();
 
@@ -40,29 +43,31 @@ public class BrokerController {
             boolean isAuthenticated = brokerService.authenticate(username, password, session);
             if (isAuthenticated) {
                 session.setAttribute("name", username);
-                return "redirect:/logado";
+                return new ModelAndView("redirect:/logado");
             }
         }
 
-        return "redirect:/login?error";
+        return new ModelAndView("redirect:/login?error");
     }
 
     @GetMapping("/registro")
-    public String register(Model model) {
-        model.addAttribute("broker", new Broker());
-        return "register";
+    public ModelAndView register() {
+        ModelAndView mav = new ModelAndView("register");
+        mav.addObject("broker", new Broker());
+        return mav;
     }
 
     @PostMapping("/register")
-    public String registerBroker(@ModelAttribute("broker") Broker broker) {
+    public ModelAndView registerBroker(@ModelAttribute("broker") Broker broker) {
         brokerService.saveBroker(broker);
-        return "redirect:/login";
+        return new ModelAndView("redirect:/login");
     }
 
     @GetMapping("/logado")
-    public String logado(Model model) {
-        model.addAttribute("broker", new Broker());
-        return "logado";
+    public ModelAndView logado() {
+        ModelAndView mav = new ModelAndView("logado");
+        mav.addObject("broker", new Broker());
+        return mav;
     }
 
     @PostMapping("/compra")
@@ -71,6 +76,7 @@ public class BrokerController {
         brokerService.compra(ativo, quant, val, username);
         return ResponseEntity.ok("Transação de compra enviada com sucesso!");
     }
+    
 
     @PostMapping("/venda")
     public ResponseEntity<String> venda(HttpSession session, @RequestParam String ativo,
@@ -80,15 +86,15 @@ public class BrokerController {
     }
 
     @PostMapping("/acompanha")
-    public ResponseEntity<String> acompanharAcao(HttpSession session, @RequestParam String acompanha, @RequestParam String username) {
+    public ResponseEntity<String> acompanharAcao(HttpSession session, @RequestParam String acompanha,
+            @RequestParam String username) {
         return ResponseEntity.ok(brokerService.acompanha(username, acompanha));
     }
-    
+
     @GetMapping("/acompanha")
-    public String acompanha(Model model) {
-        model.addAttribute("broker", new Broker());
-        return "acompanha";
+    public ModelAndView acompanha() {
+        ModelAndView mav = new ModelAndView("acompanha");
+        mav.addObject("broker", new Broker());
+        return mav;
     }
-
-
 }
