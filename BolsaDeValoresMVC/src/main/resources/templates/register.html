@@ -3,10 +3,12 @@
 
 <head>
     <title>Registro</title>
+    <link th:href="@{/styles/css/restart.css}" rel="stylesheet" />
+    <link th:href="@{/styles/css/main.css}" rel="stylesheet">
+
 </head>
 
 <body>
-    <h2>Registro</h2>
     <form th:object="${broker}" th:action="@{/register}" method="post">
         <label for="name">Nome:</label><br>
         <input type="text" id="name" th:field="*{name}"><br>
