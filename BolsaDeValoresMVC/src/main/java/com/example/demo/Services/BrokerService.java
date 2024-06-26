@@ -101,7 +101,10 @@ public class BrokerService implements MessageListener {
         livro.setValor(val);
         livroRepository.save(livro);
         todasCompras.add(livro);
-        enviaPedido("compra." + ativo, quant + ";" + val + ";" + corretora);
+        String topic = "compra." + ativo;
+        String message = quant + ";" + val + ";" + corretora;
+        enviaPedido(topic, message);
+
     }
 
     public void venda(String ativo, int quant, double val, String corretora) {
@@ -113,7 +116,10 @@ public class BrokerService implements MessageListener {
         livro.setValor(val);
         livroRepository.save(livro);
         todasVendas.add(livro);
-        enviaPedido("venda." + ativo, quant + ";" + val + ";" + corretora);
+        String topic = "venda." + ativo;
+        String message = quant + ";" + val + ";" + corretora;
+        enviaPedido(topic, message);
+
     }
 
     private void enviaPedido(String topic, String message) {
