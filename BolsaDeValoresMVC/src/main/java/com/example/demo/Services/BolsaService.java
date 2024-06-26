@@ -20,6 +20,7 @@ import com.example.demo.Repositories.TransacaoRepository;
 @Service
 public class BolsaService {
 
+    
     private static List<String> dadosList = new ArrayList<String>();
     private static DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy-HH:mm:ss");
 
