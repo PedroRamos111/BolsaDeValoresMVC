@@ -10,13 +10,12 @@ public class RabbitMQTopicInitializer {
 
     @Autowired
     private RabbitAdmin rabbitAdmin;
-    
-        public void initializeTopics(String[] topics) {
-            for (String topicName : topics) {
-                TopicExchange topicExchange = new TopicExchange(topicName);
-                rabbitAdmin.declareExchange(topicExchange);
-            }
+
+    public void initializeTopics(String[] topics) {
+        for (String topicName : topics) {
+            TopicExchange topicExchange = new TopicExchange(topicName);
+            rabbitAdmin.declareExchange(topicExchange);
         }
-    
-    
+    }
+
 }
