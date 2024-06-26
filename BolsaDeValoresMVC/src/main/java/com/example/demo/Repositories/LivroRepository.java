@@ -7,4 +7,5 @@ import com.example.demo.Models.Livro;
 public interface LivroRepository extends JpaRepository<Livro, Long> {
     List<Livro> findByComprador(String comprador);
     List<Livro> findByAtividade(String atividade);
+    List<Livro> findByBolsaAndCompradorAndQtdAndValor(String bolsa, String comprador, int qtd, double valor);
 }

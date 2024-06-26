@@ -35,25 +35,20 @@ public class BrokerService implements MessageListener {
     @Autowired
     private LivroRepository livroRepository;
     @Autowired
-    private TransacaoRepository transacaoRepository;
-    @Autowired
     private RabbitMQTopicInitializer rabbitMQTopicInitializer;
 
     private List<Livro> todasCompras = new ArrayList<>();
     private List<Livro> todasVendas = new ArrayList<>();
-    private List<Transacao> transacoes = new ArrayList<>();
 
     
     public List<Livro> getTodasCompras() {
+        todasCompras = livroRepository.findByAtividade("compra");
         return todasCompras;
     }
-
+    
     public List<Livro> getTodasVendas() {
+        todasVendas = livroRepository.findByAtividade("venda");
         return todasVendas;
-    }
-
-    public List<Transacao> getTransacoes() {
-        return transacoes;
     }
 
 
@@ -61,7 +56,6 @@ public class BrokerService implements MessageListener {
     public void init() {
         todasCompras = livroRepository.findByAtividade("compra");
         todasVendas = livroRepository.findByAtividade("venda");
-        transacoes = transacaoRepository.findAll();
     }
 
 
@@ -137,13 +131,6 @@ public class BrokerService implements MessageListener {
         String quantidade = dadosM[2];
         String preco = dadosM[3];
         String corretora = dadosM[4];
-        Transacao transacao = new Transacao();
-        transacao.setComprador(corretora);
-        transacao.setBolsa(acao);
-        transacao.setQtd(Integer.parseInt(quantidade));
-        transacao.setValor(Double.parseDouble(preco));
-        transacaoRepository.save(transacao);
-        transacoes.add(transacao);
         System.out.println(formatMsg(tipo, acao, quantidade, preco, corretora));
     }
 

@@ -105,11 +105,4 @@ public class BrokerController {
         return mav;
     }
     
-    @GetMapping("/transacoes")
-    public ModelAndView verTransacoes() {
-        ModelAndView mav = new ModelAndView("verTransacoes");
-        mav.addObject("transacoes", brokerService.getTransacoes());
-        return mav;
-    }
-
 }
