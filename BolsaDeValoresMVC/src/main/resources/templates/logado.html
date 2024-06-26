@@ -34,6 +34,10 @@
     <div class="container">
         <button id="acompanhar" style="margin-top: 20px;">Quero acompanhar uma ação</button>
     </div>
+    <div class="container">
+        <button id="verPedidos" style="margin-top: 20px;">Ver Pedidos</button>
+        <button id="verTransacoes" style="margin-top: 20px;">Ver Transações</button>
+    </div>
     <script>
         $(document).ready(function () {
             $("#formDeTransacao").on('submit', function (e) {
@@ -51,6 +55,13 @@
 
             $("#acompanhar").click(function (e) {
                 window.location.href = "/acompanha";
+            });
+            $("#verPedidos").click(function () {
+                window.location.href = "/pedidos";
+            });
+
+            $("#verTransacoes").click(function () {
+                window.location.href = "/transacoes";
             });
         });
     </script>
