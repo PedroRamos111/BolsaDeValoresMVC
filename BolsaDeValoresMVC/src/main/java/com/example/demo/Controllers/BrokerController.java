@@ -76,7 +76,6 @@ public class BrokerController {
         brokerService.compra(ativo, quant, val, username);
         return ResponseEntity.ok("Transação de compra enviada com sucesso!");
     }
-    
 
     @PostMapping("/venda")
     public ResponseEntity<String> venda(HttpSession session, @RequestParam String ativo,
@@ -97,4 +96,20 @@ public class BrokerController {
         mav.addObject("broker", new Broker());
         return mav;
     }
+
+    @GetMapping("/pedidos")
+    public ModelAndView verPedidos() {
+        ModelAndView mav = new ModelAndView("verPedidos");
+        mav.addObject("compras", brokerService.getTodasCompras());
+        mav.addObject("vendas", brokerService.getTodasVendas());
+        return mav;
+    }
+    
+    @GetMapping("/transacoes")
+    public ModelAndView verTransacoes() {
+        ModelAndView mav = new ModelAndView("verTransacoes");
+        mav.addObject("transacoes", brokerService.getTransacoes());
+        return mav;
+    }
+
 }
