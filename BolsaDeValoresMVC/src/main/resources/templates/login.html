@@ -9,15 +9,16 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-    <h2>Login</h2>
-    <form id="loginForm">
-        <label for="name">Nome:</label>
-        <input type="text" id="name" name="name"><br><br>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="senha"><br><br>
-        <button type="submit">Login</button>
-    </form>
-
+    <h1>Login</h1>
+    <div class="container">
+        <form id="loginForm">
+            <label for="name">Nome:</label>
+            <input type="text" id="name" name="name"><br><br>
+            <label for="password">Senha:</label>
+            <input type="password" id="password" name="senha"><br><br>
+            <button type="submit">Login</button>
+        </form>
+    </div>
     <script>
         $(document).ready(function () {
             $("#loginForm").on('submit', function (e) {

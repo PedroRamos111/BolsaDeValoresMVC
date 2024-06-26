@@ -9,13 +9,16 @@
 </head>
 
 <body>
-    <form th:object="${broker}" th:action="@{/register}" method="post">
-        <label for="name">Nome:</label><br>
-        <input type="text" id="name" th:field="*{name}"><br>
-        <label for="senha">Senha:</label><br>
-        <input type="password" id="senha" th:field="*{senha}"><br>
-        <input type="submit" value="Registrar">
-    </form>
+    <h1>Register</h1>
+    <div class="container">
+        <form th:object="${broker}" th:action="@{/register}" method="post">
+            <label for="name">Nome:</label><br>
+            <input type="text" id="name" th:field="*{name}"><br>
+            <label for="senha">Senha:</label><br>
+            <input type="password" id="senha" th:field="*{senha}"><br>
+            <input type="submit" value="Registrar">
+        </form>
+    </div>
 </body>
 
 </html>

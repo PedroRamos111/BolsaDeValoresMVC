@@ -9,14 +9,17 @@
     <title>Acompanhar ações</title>
 </head>
 <body>
-    <h2>Acompanhamento</h2>
-    <form id="formAcompanha">
-        <label for="acompanha">Digite qual ação Você quer acompanhar (Uma ação por vez):</label><br><br>
-        <input type="text" id="acompanhaInput" name="acompanha"><br>
-        <input type="submit" value="Enviar">
-    </form>
-    <button id="logado" style="margin-top: 20px;">Página principal</button>
-
+    <h1>Acompanhamento</h1>
+    <div class="container">
+        <form id="formAcompanha">
+            <label for="acompanhaInput">Digite uma ação para acompanhar</label><br><br>
+            <input type="text" id="acompanhaInput" name="acompanha"><br>
+            <input type="submit" value="Enviar">
+        </form>
+    </div>
+    <div class="container">
+        <button id="logado" style="margin-top: 20px;">Página principal</button>
+    </div>
     <script>
         $(document).ready(function () {
             $("#formAcompanha").submit(function (e) {

@@ -11,6 +11,7 @@
 </head>
 <body>
     <h1>Compra e Venda de Ações</h1>
+    <div class="container">
     <form id="formDeTransacao">
         <label for="transacao">Tipo de Transação:</label>
         <select id="transacao" name="transacao">
@@ -29,8 +30,10 @@
         <br>
         <input type="submit" value="Enviar">
     </form>
-    <button id="acompanhar" style="margin-top: 20px;">Quero acompanhar uma ação</button>
-
+    </div>
+    <div class="container">
+        <button id="acompanhar" style="margin-top: 20px;">Quero acompanhar uma ação</button>
+    </div>
     <script>
         $(document).ready(function () {
             $("#formDeTransacao").on('submit', function (e) {
